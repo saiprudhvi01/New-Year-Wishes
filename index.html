@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1., user-scalable=no">
+    <title>Happy new Year</title>
+    <link rel="stylesheet" href="lib.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="magic-particles.js"></script>
+    <script src="date-format.js"></script>
+    <script src="dj-inner-particles.js"></script>
+    <script src="dynamic-effects.js"></script>
+</head>
+<body class="noSelect">
+    <audio src="./music/tick.mp3" id="tickMusic" autoplay loop></audio>
+    <audio src="./music/background.mp3" id="backgroundMusic" autoplay loop></audio>
+    <div class="welcome" id="welcome">
+        <h2>🎵 DROP THE BEAT 2026 🎵</h2>
+        <img src="./images/newYear.webp">
+        <div class="input-group">
+            <input type="text" id="userName" placeholder="🎧 NAME" class="user-input">
+            <input type="text" id="userDob" placeholder="🎂 BIRTH DATE (DD/MM/YYYY)" class="user-input" maxlength="10">
+        </div>
+        <button class="press" onclick="start()">🎹 MIX MY 2026</button>
+        <p>🔥 ENTER YOUR VIBES TO UNLOCK YOUR 2026 BEAT! 🎶</p>
+    </div>
+
+    <div class="main-content">
+        <div class="pre-new-year-message">
+            <h1 class="message-title">🌟 Something Special Before 2026 🌟</h1>
+            <div class="message-content">
+                <p class="wish-text">✨ As the clock ticks toward midnight, I wanted to share something magical with you...</p>
+                <p class="advice-text">💫 The stars align for new beginnings, dreams take flight, and possibilities become endless. Your journey into 2026 holds extraordinary promise!</p>
+                <p class="blessing-text">🎯 May this New Year bring you courage to chase your dreams, wisdom to make right choices, and joy in every moment you live.</p>
+                <p class="timing-text">⏰ The perfect moment approaches... Get ready to discover your incredible 2026 destiny!</p>
+            </div>
+        </div>
+
+    <div class="hero-section">
+        <div class="quote hero-quote">
+            <p>Wishing you a year full of blessing and filled with a new adventure. Happy new year 2026!</p>
+        </div>
+    </div>
+
+    <div class="countdown-section">
+        <div class="clocks">
+            <div class="clock-container">
+                <div class="clock press">
+                    <div class="hour">
+                        <div class="hr"></div>
+                    </div>
+                    <div class="min">
+                        <div class="mn"></div>
+                    </div>
+                    <div class="sec">
+                        <div class="sc"></div>
+                    </div>
+                    <div class="point"></div>
+                </div>
+            </div>
+            <div class="countdown-text">
+                <p id="countDown">42hours 2min 45sec</p>
+            </div>
+        </div>
+    </div>
+    <div class="cards-section">
+        <h2 class="section-title">Open Your New Year Cards</h2>
+        <div class="cards-container">
+            <div class="bookDiv">
+                <div class="book">
+                    <img src="./images/b/b2.webp">
+                </div>
+                <div class="details">
+                   <img src="./images/b/p1.jpg">
+                   <div class="letter">
+                       <h3>Dear Friend,</h3>
+                       <p>As we step into 2026, I want to thank you for being an amazing part of my journey. May this year bring you endless joy, success, and beautiful memories. Your friendship means the world to me!</p>
+                       <p>Wishing you a New Year filled with laughter, love, and all the dreams you hold close to your heart. Cheers to new beginnings and wonderful adventures ahead!</p>
+                       <p>With warm wishes,<br>Your Friend</p>
+                   </div>
+                </div>
+            </div>
+            <div class="bookDiv">
+                <div class="book">
+                    <img src="./images/b/b1.webp">
+                </div>
+                <div class="details">
+                   <img src="./images/b/p2.jpg">
+                   <div class="letter">
+                       <h3>Happy New Year 2026!</h3>
+                       <p>This year has been incredible, and I'm so grateful to have you by my side. As we welcome 2026, I hope all your aspirations come true and you find happiness in every moment.</p>
+                       <p>May this New Year open doors to new opportunities, bring you closer to your goals, and fill your life with love and laughter. You deserve all the best!</p>
+                       <p>Cheers to 2026!<br>Forever grateful</p>
+                   </div>
+                </div>
+            </div>
+            <div class="bookDiv">
+                <div class="book">
+                    <img src="./images/b/b3.png">
+                </div>
+                <div class="details">
+                       <img src="./images/b/p3.webp">
+                       <div class="letter">
+                           <h3>New Year Blessings</h3>
+                           <p>As the calendar turns to 2026, I'm sending you my warmest wishes for a year ahead filled with peace, prosperity, and pure happiness. May you overcome every challenge and celebrate every victory.</p>
+                           <p>Remember that you are capable of amazing things, and this New Year is your canvas to paint your dreams. Shine bright, stay strong, and keep spreading your wonderful energy!</p>
+                           <p>With love and best wishes,<br>For 2026 and beyond</p>
+                       </div>
+                </div>
+            </div>
+        </div>
+        <div class="noti">Click to Open Cards</div>
+    </div>
+
+    <div class="wishes-section">
+        <div class="wish-card">
+            <p>I'm blessed to know that I have friends like you in my life this New Year. Here's to many years to come!</p>
+        </div>
+        <div class="wish-card">
+            <p>May the New Year 2026 bring you more happiness, success, love and blessings!</p>
+        </div>
+        <div class="wish-card">
+            <p>Let this year be the year you seek progress rather than perfection and enjoy every victory you win along the way to your goals.</p>
+        </div>
+    </div>
+
+    </div>
+
+    <div class="footer">
+        <p>Happy New Year 2026!</p>
+    </div>
+
+    <input type="text" name="" id="hiddenText" style="width: 1px;border: none;outline: none;height: 1px;position: absolute;">
+    <script src="./js/main.js"></script>
+    <script src="./js/audio.js"></script>
+    <script src="./js/clock.js"></script>
+    <script src="./js/countDown.js"></script>
+</body>
+</html>

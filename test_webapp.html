@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Google Sheets Web App</title>
+</head>
+<body>
+    <h1>Test Google Sheets Integration</h1>
+    <button onclick="testWebApp()">Test Web App</button>
+    <div id="result"></div>
+
+    <script>
+        function testWebApp() {
+            const testData = {
+                name: "Test User",
+                dob: "2000-01-01",
+                zodiacSign: "Capricorn",
+                timestamp: new Date().toISOString()
+            };
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = "Testing...";
+
+            // Create and submit a form (POST method)
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://script.google.com/macros/s/AKfycbx70XcHeyhqgAY28ivnQJdNfnppZSl150VJkDTA_a9wGfFi8dfvPILSHb2jj9ud9D62/exec';
+            form.target = '_blank'; // Open in new tab to see response
+            
+            // Add form fields
+            const nameField = document.createElement('input');
+            nameField.type = 'hidden';
+            nameField.name = 'name';
+            nameField.value = testData.name;
+            form.appendChild(nameField);
+            
+            const dobField = document.createElement('input');
+            dobField.type = 'hidden';
+            dobField.name = 'dob';
+            dobField.value = testData.dob;
+            form.appendChild(dobField);
+            
+            const zodiacField = document.createElement('input');
+            zodiacField.type = 'hidden';
+            zodiacField.name = 'zodiacSign';
+            zodiacField.value = testData.zodiacSign;
+            form.appendChild(zodiacField);
+            
+            const timestampField = document.createElement('input');
+            timestampField.type = 'hidden';
+            timestampField.name = 'timestamp';
+            timestampField.value = testData.timestamp;
+            form.appendChild(timestampField);
+            
+            // Submit form
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+            
+            resultDiv.innerHTML = `
+                <h3>Form Submitted!</h3>
+                <p>Check the new tab for response and your Google Sheet for the data.</p>
+                <p>Look for: {"status":"success","message":"Data saved successfully","received":{"name":"Test User",...}}</p>
+            `;
+            console.log('Web App: Form submitted via POST');
+        }
+    </script>
+</body>
+</html>

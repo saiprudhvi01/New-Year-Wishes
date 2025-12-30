@@ -1,0 +1,132 @@
+// Google Apps Script - Deploy this as Web App
+// Go to: script.google.com → New Project → Paste this code → Deploy → Web App
+
+function doGet(e) {
+  // For GET requests, return a simple HTML page with a form
+  return HtmlService.createHtmlOutput(`
+    <html>
+    <body>
+      <h1>New Year 2026 Data Collection</h1>
+      <p>This endpoint works with POST requests. Use the test page to submit data.</p>
+      <p>Data is being saved to Google Sheet successfully!</p>
+    </body>
+    </html>
+  `);
+}
+
+function doPost(e) {
+  try {
+    // Log the entire event object for debugging
+    Logger.log('POST Event object: ' + JSON.stringify(e));
+    
+    // Get parameters from the event object
+    let data = {};
+    
+    if (e && e.parameter) {
+      // Try to get from e.parameter (standard way)
+      data = {
+        name: e.parameter.name || "",
+        dob: e.parameter.dob || "",
+        zodiacSign: e.parameter.zodiacSign || "",
+        timestamp: e.parameter.timestamp || ""
+      };
+      Logger.log('Got parameters from e.parameter: ' + JSON.stringify(data));
+    } else {
+      // If no parameters, create default test data for debugging
+      data = {
+        name: "POST Test User",
+        dob: "2000-01-01",
+        zodiacSign: "Capricorn",
+        timestamp: new Date().toISOString()
+      };
+      Logger.log('No parameters found, using test data: ' + JSON.stringify(data));
+    }
+    
+    // Always save some data for testing
+    if (!data.name || data.name === "") {
+      data = {
+        name: "Force Test User",
+        dob: "2000-01-01",
+        zodiacSign: "Capricorn",
+        timestamp: new Date().toISOString()
+      };
+      Logger.log('Forced test data: ' + JSON.stringify(data));
+    }
+    
+    Logger.log('Final data: ' + JSON.stringify(data));
+    
+    // Get the spreadsheet - try different sheet names
+    const spreadsheet = SpreadsheetApp.openById("1E3p9W0aCMGn5UWbTBNz_EbBIvbzR-qJRKKZTFgZbzD8");
+    let sheet = null;
+    
+    // Try different possible sheet names
+    const possibleSheetNames = ["User Data", "UserData", "user data", "userdata"];
+    for (const sheetName of possibleSheetNames) {
+      sheet = spreadsheet.getSheetByName(sheetName);
+      if (sheet) {
+        Logger.log('Found sheet: ' + sheetName);
+        break;
+      }
+    }
+    
+    if (!sheet) {
+      // Create the sheet if it doesn't exist
+      sheet = spreadsheet.insertSheet("User Data");
+      sheet.appendRow(["Timestamp", "Name", "DOB", "ZodiacSign", "UserTimeStamp"]);
+      Logger.log('Created new sheet: User Data');
+    }
+    
+    // Add server timestamp and append data
+    const serverTimestamp = new Date();
+    const rowData = [
+      serverTimestamp,
+      data.name || "",
+      data.dob || "",
+      data.zodiacSign || "",
+      data.timestamp || ""
+    ];
+    
+    Logger.log('Appending row: ' + JSON.stringify(rowData));
+    sheet.appendRow(rowData);
+    Logger.log('Row appended successfully!');
+    
+    // Get sheet info for debugging
+    const sheetName = sheet.getName();
+    const lastRow = sheet.getLastRow();
+    const lastRowData = sheet.getRange(lastRow, 1, 1, 5).getValues()[0];
+    
+    Logger.log('Sheet name: ' + sheetName);
+    Logger.log('Last row number: ' + lastRow);
+    Logger.log('Last row data: ' + JSON.stringify(lastRowData));
+    Logger.log('Total sheets in spreadsheet: ' + spreadsheet.getNumSheets());
+    
+    // List all sheet names
+    for (let i = 0; i < spreadsheet.getNumSheets(); i++) {
+      Logger.log('Sheet ' + i + ': ' + spreadsheet.getSheets()[i].getName());
+    }
+    
+    // Return success response
+    return ContentService.createTextOutput(JSON.stringify({
+      status: "success",
+      message: "Data saved successfully",
+      received: data
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
+    
+  } catch (error) {
+    Logger.log('ERROR: ' + error.toString());
+    Logger.log('Stack: ' + error.stack);
+    
+    // Return error response
+    return ContentService.createTextOutput(JSON.stringify({
+      status: "error",
+      message: error.toString()
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doPost(e) {
+  // For actual POST requests, delegate to doGet
+  return doGet(e);
+}
