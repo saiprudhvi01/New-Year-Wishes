@@ -687,6 +687,7 @@ body.opened .light-orbs {
     width: 100%;
     height: auto;
     padding:0 20px;
+    box-sizing: border-box;
    
 }
 .quote p{
