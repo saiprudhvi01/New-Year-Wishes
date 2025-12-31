@@ -720,7 +720,7 @@ body.opened .light-orbs {
     transform-style: preserve-3d;
     transform:perspective(2000px);
     transition: 1s;
-    box-shadow: inset 300px 0 50px rgba(0,0,0,0.5),
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2),
                 2px 2px 15px 1px #ddd;
   /* box-shadow: 0 0 15px 0px #555; */
     margin: 15px;
@@ -734,7 +734,7 @@ body.opened .light-orbs {
 .bookDiv.open{
     z-index: 1000;
     transform: perspective(2000px) rotate(-10deg);
-    box-shadow: inset 20px 0 50px rgba(0,0,0,0.5);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
 }
 .bookDiv.open .book img{
     transform: rotateY(-135deg);
