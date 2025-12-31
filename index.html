@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1., user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Happy new Year</title>
     <link rel="stylesheet" href="lib.css">
     <link rel="stylesheet" href="style.css">
-    <script src="magic-particles.js"></script>
-    <script src="date-format.js"></script>
-    <script src="dj-inner-particles.js"></script>
-    <script src="dynamic-effects.js"></script>
 </head>
 <body class="noSelect">
-    <audio src="./music/tick.mp3" id="tickMusic" autoplay loop></audio>
-    <audio src="./music/background.mp3" id="backgroundMusic" autoplay loop></audio>
+    <audio src="./music/tick.mp3" id="tickMusic" loop></audio>
+    <audio src="./music/background.mp3" id="backgroundMusic" loop></audio>
+    <input type="text" id="hiddenText" style="width:1px;height:1px;position:absolute;top:-10px;left:-10px;">
+    <div class="light-orbs">
+        <div class="light-orb"></div>
+        <div class="light-orb"></div>
+        <div class="light-orb"></div>
+        <div class="light-orb"></div>
+    </div>
     <div class="welcome" id="welcome">
         <h2>🎵 DROP THE BEAT 2026 🎵</h2>
         <img src="./images/newYear.webp">
@@ -38,103 +41,72 @@
         </div>
 
     <div class="hero-section">
-        <div class="quote hero-quote">
-            <p>Wishing you a year full of blessing and filled with a new adventure. Happy new year 2026!</p>
+        <div class="astrology-highlight">
+            <h2 class="astrology-title">🌟 Your 2026 Astrology Prediction 🌟</h2>
+            <div class="astrology-subtitle">✨ Personalized Cosmic Insights for Your Journey Ahead ✨</div>
         </div>
-    </div>
-
-    <div class="countdown-section">
-        <div class="clocks">
-            <div class="clock-container">
-                <div class="clock press">
-                    <div class="hour">
-                        <div class="hr"></div>
-                    </div>
-                    <div class="min">
-                        <div class="mn"></div>
-                    </div>
-                    <div class="sec">
-                        <div class="sc"></div>
-                    </div>
-                    <div class="point"></div>
-                </div>
-            </div>
-            <div class="countdown-text">
-                <p id="countDown">42hours 2min 45sec</p>
-            </div>
+        <div class="quote hero-quote">
+            <p class="astrology-prediction">Based on your astrological profile, here's your personalized 2026 prediction!</p>
         </div>
     </div>
     <div class="cards-section">
-        <h2 class="section-title">Open Your New Year Cards</h2>
+        <div class="cards-header">
+            <h2 class="section-title">🎴 Unlock Your 2026 Destiny Cards 🎴</h2>
+            <p class="cards-subtitle">✨ Each card holds a secret message for your incredible journey ahead! ✨</p>
+        </div>
         <div class="cards-container">
-            <div class="bookDiv">
+            <div class="bookDiv" onclick="this.classList.toggle('open')">
                 <div class="book">
                     <img src="./images/b/b2.webp">
                 </div>
                 <div class="details">
                    <img src="./images/b/p1.jpg">
                    <div class="letter">
-                       <h3>Dear Friend,</h3>
-                       <p>As we step into 2026, I want to thank you for being an amazing part of my journey. May this year bring you endless joy, success, and beautiful memories. Your friendship means the world to me!</p>
-                       <p>Wishing you a New Year filled with laughter, love, and all the dreams you hold close to your heart. Cheers to new beginnings and wonderful adventures ahead!</p>
-                       <p>With warm wishes,<br>Your Friend</p>
+                       <h3>🌟 Your 2026 Destiny Awaits! 🌟</h3>
+                       <p>🔮 The universe has chosen YOU for something extraordinary in 2026! This card reveals that you're destined for amazing breakthroughs and magical moments that will transform your life forever!</p>
+                       <p>✨ Get ready for surprise blessings, unexpected opportunities, and dreams coming true in ways you never imagined! Your energy is aligned with success, love, and abundance!</p>
+                       <p>🎯 Your 2026 Superpower: <strong>Manifesting Miracles!</strong><br>With cosmic love,<br>The Universe</p>
                    </div>
                 </div>
             </div>
-            <div class="bookDiv">
+            <div class="bookDiv" onclick="this.classList.toggle('open')">
                 <div class="book">
                     <img src="./images/b/b1.webp">
                 </div>
                 <div class="details">
                    <img src="./images/b/p2.jpg">
                    <div class="letter">
-                       <h3>Happy New Year 2026!</h3>
-                       <p>This year has been incredible, and I'm so grateful to have you by my side. As we welcome 2026, I hope all your aspirations come true and you find happiness in every moment.</p>
-                       <p>May this New Year open doors to new opportunities, bring you closer to your goals, and fill your life with love and laughter. You deserve all the best!</p>
-                       <p>Cheers to 2026!<br>Forever grateful</p>
+                       <h3>💫 Secret Message from the Stars! 💫</h3>
+                       <p>🌠 The cosmos whispered your name to me! You're carrying a special light that will illuminate 2026 with incredible joy and success. This is YOUR year to shine brighter than ever before!</p>
+                       <p>🎊 Hidden forces are working behind the scenes to bring you exactly what you've been wishing for! Love, prosperity, and adventure are heading your way at lightning speed!</p>
+                       <p>🔥 Your 2026 Magic Word: <strong>UNSTOPPABLE!</strong><br>Celestial blessings,<br>The Stars</p>
                    </div>
                 </div>
             </div>
-            <div class="bookDiv">
+            <div class="bookDiv" onclick="this.classList.toggle('open')">
                 <div class="book">
                     <img src="./images/b/b3.png">
                 </div>
                 <div class="details">
                        <img src="./images/b/p3.webp">
                        <div class="letter">
-                           <h3>New Year Blessings</h3>
-                           <p>As the calendar turns to 2026, I'm sending you my warmest wishes for a year ahead filled with peace, prosperity, and pure happiness. May you overcome every challenge and celebrate every victory.</p>
-                           <p>Remember that you are capable of amazing things, and this New Year is your canvas to paint your dreams. Shine bright, stay strong, and keep spreading your wonderful energy!</p>
-                           <p>With love and best wishes,<br>For 2026 and beyond</p>
+                           <h3>🎯 Your 2026 Victory Prophecy! 🎯</h3>
+                           <p>⚡ Time to reveal your ultimate power! You're about to unlock abilities you never knew you had! 2026 is your playground for success, and you're the main character in this amazing story!</p>
+                           <p>🏆 Every challenge you face will become your triumph! Every setback will lead to a comeback! You're not just surviving 2026 - you're conquering it with style and grace!</p>
+                           <p>💎 Your 2026 Legacy: <strong>LEGENDARY STATUS!</strong><br>Victory vibes,<br>Your Future Self</p>
                        </div>
                 </div>
             </div>
         </div>
-        <div class="noti">Click to Open Cards</div>
-    </div>
-
-    <div class="wishes-section">
-        <div class="wish-card">
-            <p>I'm blessed to know that I have friends like you in my life this New Year. Here's to many years to come!</p>
-        </div>
-        <div class="wish-card">
-            <p>May the New Year 2026 bring you more happiness, success, love and blessings!</p>
-        </div>
-        <div class="wish-card">
-            <p>Let this year be the year you seek progress rather than perfection and enjoy every victory you win along the way to your goals.</p>
-        </div>
-    </div>
-
     </div>
 
     <div class="footer">
         <p>Happy New Year 2026!</p>
     </div>
 
-    <input type="text" name="" id="hiddenText" style="width: 1px;border: none;outline: none;height: 1px;position: absolute;">
-    <script src="./js/main.js"></script>
     <script src="./js/audio.js"></script>
     <script src="./js/clock.js"></script>
     <script src="./js/countDown.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>

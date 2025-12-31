@@ -4,13 +4,16 @@ let countDown = document.getElementById("countDown");
 let then = new Date("2026 jan 01 00:00");
 
 function showCountDown(){
+    if (!countDown) return;
+    
     let now = new Date();
     let ms = then.getTime() - now.getTime();
 
     if(ms<0){
         countDown.innerHTML = "I said that 365 days ago, but a happy new year.";
-        document.getElementById("adv").remove();
-        tickMusic.pause();
+        const advElement = document.getElementById("adv");
+        if (advElement) advElement.remove();
+        if (typeof tickMusic !== 'undefined') tickMusic.pause();
     }else{
         countDown.innerHTML = getDateFromMs(ms);
     }

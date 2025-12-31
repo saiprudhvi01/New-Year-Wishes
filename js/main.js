@@ -1,8 +1,9 @@
-var firstScreen = document.getElementById("welcome");
-
 document.body.onload = function(){
+    var firstScreen = document.getElementById("welcome");
+    if (!firstScreen) return;
+
     firstScreen.querySelector("h2").innerText = "Welcome to New Year 2026";
-    firstScreen.querySelector("p").innerHTML = "Enter your details and click Start to continue";
+    firstScreen.querySelector("p").innerHTML = "Enter your details to see how your New Year 2026 will be — based on your astrology profile.";
     
     // Check if user data exists and auto-fill
     const savedUserData = localStorage.getItem('newYearUserData');
@@ -22,7 +23,35 @@ document.body.onload = function(){
 function hideWelcomeScreen() {
     const welcome = document.getElementById('welcome');
     if (welcome) {
-        welcome.classList.add('hidden');
+        welcome.style.display = 'none';
+    }
+}
+
+// Make revealWish globally available
+window.revealWish = function(wishElement, wishIndex) {
+    const overlay = wishElement.querySelector('.wish-overlay');
+    const content = wishElement.querySelector('.wish-content');
+    
+    if (content.classList.contains('hidden')) {
+        // Hide overlay
+        overlay.classList.add('hidden');
+        
+        // Reveal content with animation
+        setTimeout(() => {
+            content.classList.remove('hidden');
+            content.classList.add('revealed');
+            
+            // Add sparkle effect
+            createWishSparkles(wishElement);
+            
+            // Play a subtle sound effect if available
+            playWishRevealSound();
+        }, 300);
+        
+        // Add haptic feedback on mobile
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
     }
 }
 
@@ -81,20 +110,332 @@ function start(){
     
     document.querySelector(".hero-quote p").innerHTML = `Based on your ${prediction.zodiacSign} astrological profile, here is your 2026 prediction: ${prediction.heroMessage}`;
     updateWishCards(prediction);
-    tickMusic.play();
-    bgMusic.play();
+    
+    // Play audio after user interaction
+    const tickMusic = document.getElementById("tickMusic");
+    const bgMusic = document.getElementById("backgroundMusic");
+    if (tickMusic) tickMusic.play();
+    if (bgMusic) bgMusic.play();
     
     // Hide welcome screen and show main content
-    hideWelcomeScreen();
+    document.getElementById("welcome").style.display = "none";
+    document.querySelector(".main-content").style.display = "block";
+    document.body.classList.add('opened');
     
-    // Show the main content
-    const mainContent = document.querySelector('.main-content');
-    if (mainContent) {
-        mainContent.style.display = 'block';
+    // Force scroll to top to remove any residual offset
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    
+    // Create prediction chart (only if chart exists on page)
+    const predictionChartCanvas = document.getElementById('predictionChart');
+    if (predictionChartCanvas && typeof createPredictionChart === 'function') {
+        setTimeout(() => {
+            createPredictionChart(birthDate);
+        }, 500);
+    }
+}
+
+// Make revealCard globally available
+window.revealCard = function(cardElement, cardIndex) {
+    const overlay = cardElement.querySelector('.card-overlay');
+    const details = cardElement.querySelector('.details');
+    
+    if (details.classList.contains('hidden')) {
+        // Hide overlay
+        overlay.classList.add('hidden');
+        
+        // Reveal details with animation
+        setTimeout(() => {
+            details.classList.remove('hidden');
+            details.classList.add('revealed');
+            
+            // Add sparkle effect
+            createSparkles(cardElement);
+            
+            // Play a subtle sound effect if available
+            playCardRevealSound();
+        }, 300);
+        
+        // Add haptic feedback on mobile
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+    }
+}
+
+// Also declare as regular function for compatibility
+function revealCard(cardElement, cardIndex) {
+    return window.revealCard(cardElement, cardIndex);
+}
+
+function createSparkles(element) {
+    const sparkleCount = 8;
+    const rect = element.getBoundingClientRect();
+    
+    for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.cssText = `
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: gold;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            left: ${rect.left + rect.width / 2}px;
+            top: ${rect.top + rect.height / 2}px;
+            animation: sparkleBurst 1s ease-out forwards;
+            animation-delay: ${i * 0.1}s;
+        `;
+        
+        document.body.appendChild(sparkle);
+        
+        setTimeout(() => sparkle.remove(), 1500);
+    }
+}
+
+function playCardRevealSound() {
+    // Create a subtle sound effect using Web Audio API
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.1);
+        
+        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.3);
+    } catch (e) {
+        // Fallback silently if audio API is not available
+    }
+}
+
+function revealWish(wishElement, wishIndex) {
+    const overlay = wishElement.querySelector('.wish-overlay');
+    const content = wishElement.querySelector('.wish-content');
+    
+    if (content.classList.contains('hidden')) {
+        // Hide overlay
+        overlay.classList.add('hidden');
+        
+        // Reveal content with animation
+        setTimeout(() => {
+            content.classList.remove('hidden');
+            content.classList.add('revealed');
+            
+            // Add sparkle effect
+            createWishSparkles(wishElement);
+            
+            // Play a subtle sound effect if available
+            playWishRevealSound();
+        }, 300);
+        
+        // Add haptic feedback on mobile
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+    }
+}
+
+function createWishSparkles(element) {
+    const sparkleCount = 6;
+    const rect = element.getBoundingClientRect();
+    
+    for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.cssText = `
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd700);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            left: ${rect.left + rect.width / 2}px;
+            top: ${rect.top + rect.height / 2}px;
+            animation: sparkleBurst 1.2s ease-out forwards;
+            animation-delay: ${i * 0.15}s;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        `;
+        
+        document.body.appendChild(sparkle);
+        
+        setTimeout(() => sparkle.remove(), 1800);
+    }
+}
+
+function playWishRevealSound() {
+    // Create a subtle sound effect using Web Audio API
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(1000, audioContext.currentTime + 0.15);
+        
+        gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.4);
+    } catch (e) {
+        // Fallback silently if audio API is not available
+    }
+}
+
+function createPredictionChart(birthDate) {
+    const canvas = document.getElementById('predictionChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const birthMonth = birthDate.getMonth() + 1;
+    const birthDay = birthDate.getDate();
+    const zodiacSign = getZodiacSign(birthMonth, birthDay);
+    
+    // Calculate predictions based on birth date
+    const predictions = calculateLifePredictions(birthMonth, birthDay, zodiacSign);
+    
+    // Create the chart
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: predictions.labels,
+            datasets: [{
+                data: predictions.values,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',   // Career & Growth - Pink
+                    'rgba(54, 162, 235, 0.8)',   // Health & Fitness - Blue
+                    'rgba(255, 206, 86, 0.8)',   // Relationships - Orange
+                    'rgba(75, 192, 192, 0.8)',   // Wealth & Stability - Teal
+                    'rgba(153, 102, 255, 0.8)'  // Learning & Creativity - Purple
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + '%';
+                        }
+                    }
+                }
+            },
+            animation: {
+                animateRotate: true,
+                animateScale: true,
+                duration: 2000,
+                easing: 'easeInOutQuart'
+            }
+        }
+    });
+    
+    // Create custom legend
+    createCustomLegend(predictions);
+}
+
+function calculateLifePredictions(month, day, zodiacSign) {
+    // Base values
+    let predictions = {
+        'Career & Growth': 20,
+        'Health & Fitness': 20,
+        'Relationships': 20,
+        'Wealth & Stability': 20,
+        'Learning & Creativity': 20
+    };
+    
+    // Adjust based on zodiac sign
+    const zodiacAdjustments = {
+        'Aries': { 'Career & Growth': 25, 'Health & Fitness': 15, 'Relationships': 15, 'Wealth & Stability': 20, 'Learning & Creativity': 25 },
+        'Taurus': { 'Career & Growth': 15, 'Health & Fitness': 25, 'Relationships': 25, 'Wealth & Stability': 25, 'Learning & Creativity': 10 },
+        'Gemini': { 'Career & Growth': 20, 'Health & Fitness': 15, 'Relationships': 25, 'Wealth & Stability': 15, 'Learning & Creativity': 25 },
+        'Cancer': { 'Career & Growth': 15, 'Health & Fitness': 20, 'Relationships': 30, 'Wealth & Stability': 20, 'Learning & Creativity': 15 },
+        'Leo': { 'Career & Growth': 30, 'Health & Fitness': 20, 'Relationships': 20, 'Wealth & Stability': 15, 'Learning & Creativity': 15 },
+        'Virgo': { 'Career & Growth': 25, 'Health & Fitness': 25, 'Relationships': 15, 'Wealth & Stability': 20, 'Learning & Creativity': 15 },
+        'Libra': { 'Career & Growth': 20, 'Health & Fitness': 15, 'Relationships': 25, 'Wealth & Stability': 20, 'Learning & Creativity': 20 },
+        'Scorpio': { 'Career & Growth': 25, 'Health & Fitness': 20, 'Relationships': 20, 'Wealth & Stability': 25, 'Learning & Creativity': 10 },
+        'Sagittarius': { 'Career & Growth': 20, 'Health & Fitness': 25, 'Relationships': 15, 'Wealth & Stability': 15, 'Learning & Creativity': 25 },
+        'Capricorn': { 'Career & Growth': 30, 'Health & Fitness': 20, 'Relationships': 15, 'Wealth & Stability': 25, 'Learning & Creativity': 10 },
+        'Aquarius': { 'Career & Growth': 20, 'Health & Fitness': 15, 'Relationships': 20, 'Wealth & Stability': 15, 'Learning & Creativity': 30 },
+        'Pisces': { 'Career & Growth': 15, 'Health & Fitness': 20, 'Relationships': 25, 'Wealth & Stability': 15, 'Learning & Creativity': 25 }
+    };
+    
+    // Apply zodiac adjustments
+    if (zodiacAdjustments[zodiacSign]) {
+        predictions = zodiacAdjustments[zodiacSign];
     }
     
-    // Scroll to top smoothly
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Add some variation based on birth day
+    const dayVariation = (day % 5) - 2; // -2 to +2
+    const categories = Object.keys(predictions);
+    categories.forEach((category, index) => {
+        predictions[category] += dayVariation;
+        predictions[category] = Math.max(10, Math.min(35, predictions[category])); // Keep between 10-35
+    });
+    
+    // Normalize to 100%
+    const total = Object.values(predictions).reduce((a, b) => a + b, 0);
+    const normalized = {};
+    Object.keys(predictions).forEach(key => {
+        normalized[key] = Math.round((predictions[key] / total) * 100);
+    });
+    
+    return {
+        labels: Object.keys(normalized),
+        values: Object.values(normalized)
+    };
+}
+
+function createCustomLegend(predictions) {
+    const legendContainer = document.getElementById('chartLegend');
+    const colors = [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)'
+    ];
+    
+    legendContainer.innerHTML = '';
+    
+    predictions.labels.forEach((label, index) => {
+        const legendItem = document.createElement('div');
+        legendItem.className = 'legend-item';
+        legendItem.innerHTML = `
+            <div class="legend-color" style="background-color: ${colors[index]}"></div>
+            <div class="legend-text">${label}: <span class="legend-value">${predictions.values[index]}%</span></div>
+        `;
+        legendContainer.appendChild(legendItem);
+    });
 }
 
 function generateNewYearPrediction(dob) {

@@ -104,6 +104,6 @@ const fadeCSS = `
 }
 `;
 
-const style = document.createElement('style');
-style.textContent = fadeCSS;
-document.head.appendChild(style);
+const dateFormatStyle = document.createElement('style');
+dateFormatStyle.textContent = fadeCSS;
+document.head.appendChild(dateFormatStyle);

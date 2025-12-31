@@ -95,7 +95,7 @@ class DynamicEffects {
 }
 
 // Add particle animation CSS
-const particleCSS = `
+const dynamicParticleCSS = `
 @keyframes floatParticle {
     0% {
         transform: translateY(100vh) rotate(0deg);
@@ -127,9 +127,9 @@ const particleCSS = `
 `;
 
 // Inject CSS
-const style = document.createElement('style');
-style.textContent = particleCSS;
-document.head.appendChild(style);
+const dynamicEffectsStyle = document.createElement('style');
+dynamicEffectsStyle.textContent = dynamicParticleCSS;
+document.head.appendChild(dynamicEffectsStyle);
 
 // Initialize effects when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {

@@ -10,17 +10,24 @@ font-family: 'Patrick Hand', cursive;*/
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-    box-sizing: border-box;
     font-family: 'Comfortaa', cursive;
     font-weight: 700;
 }
 
 /* Dynamic visual effects */
+/* Reset default margins and padding */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
 body {
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
-    min-height: 100vh;
-    position: relative;
+    font-family: 'Comfortaa', cursive;
     overflow-x: hidden;
+    position: relative;
 }
 
 body::before {
@@ -87,6 +94,12 @@ body::after {
     pointer-events: none;
     z-index: -1;
     overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.opened .light-orbs {
+    opacity: 1;
 }
 
 .light-orb {
@@ -152,10 +165,9 @@ body::after {
 }
 .welcome{
     position: fixed;
+    inset: 0;
+    width: 100%;
     height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
     display: flex;
     flex-direction: column;
@@ -165,7 +177,6 @@ body::after {
     transition: 0.5s ease opacity;
     text-align: center;
     z-index: 1000000;
-    position: relative;
     opacity: 1;
     padding: 20px;
     box-sizing: border-box;
@@ -384,18 +395,21 @@ body::after {
 .main-content {
     padding: 10px;
     display: none;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 .pre-new-year-message {
     text-align: center;
     padding: 20px 15px;
     margin: 15px 10px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), 0 0 30px rgba(42, 82, 152, 0.3);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 30px rgba(42, 82, 152, 0.4);
+    backdrop-filter: blur(15px);
     position: relative;
     overflow: hidden;
+    border: 2px solid rgba(42, 82, 152, 0.3);
 }
 
 .pre-new-year-message::before {
@@ -420,8 +434,8 @@ body::after {
 .message-title {
     font-family: 'Pushster', cursive;
     font-size: 2em;
-    color: #2a5298;
-    text-shadow: 0 0 10px rgba(42, 82, 152, 0.5);
+    color: #0b1f3a;
+    text-shadow: 0 2px 8px rgba(11, 31, 58, 0.25);
     margin-bottom: 20px;
     animation: titleGlow 3s ease-in-out infinite alternate;
 }
@@ -443,6 +457,8 @@ body::after {
     line-height: 1.5;
     margin: 10px 0;
     font-weight: 600;
+    color: #0f172a;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
     position: relative;
 }
 
@@ -463,19 +479,19 @@ body::after {
 }
 
 .wish-text {
-    color: #2a5298;
+    color: #0f2f66;
 }
 
 .advice-text {
-    color: #1e3c72;
+    color: #0b1f3a;
 }
 
 .blessing-text {
-    color: #7e8ba3;
+    color: #334155;
 }
 
 .timing-text {
-    color: #d20000;
+    color: #7f1d1d;
     font-weight: 700;
     font-size: 1.3em;
 }
@@ -691,6 +707,7 @@ body::after {
     width: 250px;
     height: 350px;
     background: #fff;
+    position: relative;
     transform-style: preserve-3d;
     transform:perspective(2000px);
     transition: 1s;
@@ -705,12 +722,12 @@ body::after {
     /* z-index: -1; */
     
 }
-.bookDiv:hover{
+.bookDiv.open{
     z-index: 1000;
     transform: perspective(2000px) rotate(-10deg);
     box-shadow: inset 20px 0 50px rgba(0,0,0,0.5);
 }
-.bookDiv:hover .book img{
+.bookDiv.open .book img{
     transform: rotateY(-135deg);
     z-index: 2000;
 }
@@ -720,20 +737,14 @@ body::after {
    background: red;
    display: block;
    margin: auto;
-   
-}
+   }
 .bookDiv .book img{
-  position: relative;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  transform-origin: left;
-  transition: 1s;
-  border-radius: 3px;
+   box-sizing: border-box;
+   transform-origin: left;
+   transition: 1s;
+   border-radius: 3px;
+ }
  
-
-}
-
 .bookDiv .book img{
   position: absolute;
   top: 0;
@@ -741,16 +752,24 @@ body::after {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
+  z-index: 2;
+ }
+ 
 .bookDiv .details{
-    width: 250px;
-    height: 350px;
-    position: relative;
-    display: block;
-    margin: 20px auto;
-    border-radius: 3px;
-}
+     width: 250px;
+     height: 350px;
+     position: absolute;
+     top: 0;
+     left: 0;
+     display: none;
+     margin: 0;
+     border-radius: 3px;
+     z-index: 1;
+ }
+.bookDiv.open .details{
+     display: block;
+     z-index: 3;
+ }
 .bookDiv .details img{
   position: absolute;
   top: 0;
@@ -759,7 +778,7 @@ body::after {
   height: 100%;
   border-radius: 3px;
   object-fit: cover;
-}
+ }
 .bookDiv .details .letter{
     position: absolute;
     top: 0;
@@ -767,17 +786,13 @@ body::after {
     width: 100%;
     height: 100%;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.85);
     border-radius: 3px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-.bookDiv:hover .details .letter{
     opacity: 1;
-}
+ }
 .bookDiv .details .letter h3{
     font-family: 'Pushster', cursive;
     font-size: 1.5em;
@@ -886,16 +901,85 @@ body::after {
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
+.astrology-highlight {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.astrology-highlight::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 4s infinite;
+}
+
+.astrology-title {
+    font-family: 'Pushster', cursive;
+    font-size: 2.2em;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.5),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite alternate;
+    position: relative;
+    z-index: 1;
+}
+
+.astrology-subtitle {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.1em;
+    color: #ffffff;
+    opacity: 0.9;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow: 
+            0 0 20px rgba(255, 255, 255, 0.5),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+        transform: scale(1);
+    }
+    to {
+        text-shadow: 
+            0 0 30px rgba(255, 255, 255, 0.8),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+        transform: scale(1.02);
+    }
+}
+
 .hero-quote {
     max-width: 600px;
     margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(42, 82, 152, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
-.hero-quote p {
+.astrology-prediction {
     font-size: 1.3em;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    line-height: 1.6;
+    color: #2a5298;
+    text-shadow: none;
+    font-family: 'Comfortaa', cursive;
+    line-height: 1.5;
+    font-weight: 700;
+    text-align: center;
 }
 
 .countdown-section {
@@ -907,16 +991,97 @@ body::after {
     margin: 20px 0;
 }
 
-.clock-container {
-    display: inline-block;
-    margin-bottom: 20px;
+.chart-header {
+    margin-bottom: 25px;
 }
 
-.countdown-text p {
-    font-size: 1.2em;
-    color: #d20000;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+.chart-title {
+    font-family: 'Pushster', cursive;
+    font-size: 2em;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+.chart-subtitle {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.1em;
+    color: #ffffff;
+    opacity: 0.9;
+    font-weight: 600;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 350px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.chart-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #2a5298, #7e8ba3, #1e3c72, #2a5298);
+    border-radius: 22px;
+    z-index: -1;
+    animation: borderGlow 4s linear infinite;
+}
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    max-width: 600px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.legend-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.legend-text {
+    font-family: 'Comfortaa', cursive;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #333;
+}
+
+.legend-value {
+    font-weight: 700;
+    color: #2a5298;
+    margin-left: 4px;
 }
 
 .cards-section {
@@ -1018,6 +1183,33 @@ body::after {
     text-align: center;
 }
 
+.cards-header {
+    margin-bottom: 30px;
+}
+
+.cards-subtitle {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.2em;
+    color: #ffffff;
+    opacity: 0.9;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.wishes-header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.wishes-subtitle {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.1em;
+    color: #ffffff;
+    opacity: 0.9;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
 .section-title {
     font-family: 'Pushster', cursive;
     font-size: 2em;
@@ -1026,6 +1218,7 @@ body::after {
     text-shadow: 
         0 2px 4px rgba(0, 0, 0, 0.4),
         0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: titleGlow 3s ease-in-out infinite alternate;
 }
 
 .wish-card {
@@ -1042,6 +1235,74 @@ body::after {
     max-width: 350px;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+}
+
+.wish-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.9), rgba(238, 90, 36, 0.9));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 13px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.wish-hint {
+    font-family: 'Pushster', cursive;
+    font-size: 1.1em;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.wish-content.hidden {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.6s ease;
+}
+
+.wish-content.revealed {
+    opacity: 1;
+    transform: scale(1);
+    animation: wishReveal 0.8s ease-out;
+}
+
+.wish-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9);
+}
+
+@keyframes wishReveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) rotate(5deg);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.1) rotate(-2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.wish-card:hover .wish-overlay:not(.hidden) {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 1), rgba(238, 90, 36, 1));
+    transform: scale(1.02);
+}
+
+.wish-card:hover .wish-hint:not(.hidden) {
+    transform: scale(1.05);
 }
 
 .wish-card::before {
@@ -1466,14 +1727,108 @@ body::after {
     }
     
     .bookDiv {
-        transform: scale(0.6);
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        transform: perspective(2000px) scale(0.6);
         margin: 5px;
     }
     
+    .book {
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+    }
+    
+    .click-hint {
+        font-family: 'Pushster', cursive;
+        font-size: 1.2em;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        animation: pulse 2s infinite;
+    }
+    
+    .details.hidden {
+        display: none;
+        opacity: 0;
+        transform: scale(0.8) rotateY(90deg);
+        transition: all 0.6s ease;
+    }
+    
+    .details.revealed {
+        display: block;
+        opacity: 1;
+        transform: scale(1) rotateY(0deg);
+        animation: cardReveal 0.8s ease-out;
+    }
+    
+    .card-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.9);
+    }
+    
+    @keyframes cardReveal {
+        0% {
+            opacity: 0;
+            transform: scale(0.8) rotateY(90deg);
+        }
+        50% {
+            opacity: 0.5;
+            transform: scale(1.1) rotateY(45deg);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1) rotateY(0deg);
+        }
+    }
+    
+    .bookDiv:hover .card-overlay:not(.hidden) {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 1), rgba(118, 75, 162, 1));
+        transform: scale(1.02);
+    }
+
+    .bookDiv:hover .click-hint:not(.hidden) {
+        transform: scale(1.05);
+    }
+
+    @keyframes sparkleBurst {
+        0% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        }
+        50% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1) rotate(180deg);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(2) rotate(360deg);
+        }
+    }
+
     .section-title {
         font-size: 1.5em;
     }
-    
+
     .wishes-section {
         padding: 20px 10px;
         gap: 10px;
@@ -1507,7 +1862,7 @@ body::after {
         transform: scale(0.98);
     }
     
-    .bookDiv:hover {
+    .bookDiv.open {
         transform: perspective(2000px) rotate(-5deg) scale(0.9);
     }
 }
@@ -1538,6 +1893,47 @@ body::after {
     
     .bookDiv {
         min-width: 200px;
-        transform: scale(0.7);
+        transform: perspective(2000px) scale(0.7);
+    }
+}
+
+/* Mobile responsive styles for astrology section */
+@media (max-width: 768px) {
+    .astrology-highlight {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .astrology-title {
+        font-size: 1.6em;
+        margin-bottom: 8px;
+    }
+    
+    .astrology-subtitle {
+        font-size: 0.9em;
+    }
+    
+    .astrology-prediction {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .astrology-highlight {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .astrology-title {
+        font-size: 1.4em;
+        margin-bottom: 6px;
+    }
+    
+    .astrology-subtitle {
+        font-size: 0.8em;
+    }
+    
+    .astrology-prediction {
+        font-size: 1em;
     }
 }

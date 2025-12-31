@@ -76,9 +76,9 @@ const innerParticleCSS = `
 `;
 
 // Inject CSS
-const style = document.createElement('style');
-style.textContent = innerParticleCSS;
-document.head.appendChild(style);
+const innerParticleStyle = document.createElement('style');
+innerParticleStyle.textContent = innerParticleCSS;
+document.head.appendChild(innerParticleStyle);
 
 // Initialize particles when page loads
 document.addEventListener('DOMContentLoaded', createInnerDJParticles);
