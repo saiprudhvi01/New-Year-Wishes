@@ -715,19 +715,19 @@ body.opened .light-orbs {
     margin: 20px auto;
     width: 250px;
     height: 350px;
-    background: transparent;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
     position: relative;
     transform-style: preserve-3d;
     transform:perspective(2000px);
     transition: 1s;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2),
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3),
                 2px 2px 15px 1px #ddd;
   /* box-shadow: 0 0 15px 0px #555; */
     margin: 15px;
     display: block;
     margin: 20px auto;
     margin-bottom: 30px;
-    border-radius: 3px;
+    border-radius: 15px;
     /* z-index: -1; */
     
 }
@@ -747,6 +747,43 @@ body.opened .light-orbs {
    display: block;
    margin: auto;
    }
+.bookDiv .book .card-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.bookDiv .book .card-text h3 {
+    font-family: 'Pushster', cursive;
+    font-size: 1.8em;
+    color: #2a5298;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.bookDiv .book .card-text p {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.1em;
+    color: #1e3c72;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+.bookDiv .book .card-text .sparkle {
+    font-size: 2em;
+    animation: pulse 2s infinite;
+}
+.bookDiv:hover .book .card-text {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8));
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
 .bookDiv .book img{
    box-sizing: border-box;
    transform-origin: left;
