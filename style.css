@@ -1946,3 +1946,13 @@ body.opened .light-orbs {
         font-size: 1em;
     }
 }
+
+@media (max-width: 768px) {
+    .bookDiv {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .bookDiv.open {
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3) !important;
+    }
+}
