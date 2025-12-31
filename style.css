@@ -715,7 +715,7 @@ body.opened .light-orbs {
     margin: 20px auto;
     width: 250px;
     height: 350px;
-    background: #fff;
+    background: transparent;
     position: relative;
     transform-style: preserve-3d;
     transform:perspective(2000px);
